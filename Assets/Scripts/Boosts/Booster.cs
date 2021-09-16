@@ -1,20 +1,13 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.UI;
 
 public abstract class Booster : MonoBehaviour
 {
-    public enum UsageType
-    {
-        Tap, Drag
-    }
+    [SerializeField] private BoosterUsageType _type;
 
-    [SerializeField] private UsageType _type;
-
-    public UsageType Type
+    public BoosterUsageType Type
     {
         get => _type;
         protected set => _type = value;
@@ -27,7 +20,7 @@ public abstract class Booster : MonoBehaviour
 
     public Image DragImage
     {
-        get => _dragImage; 
+        get => _dragImage;
         protected set => _dragImage = value;
     }
 
@@ -40,7 +33,8 @@ public abstract class Booster : MonoBehaviour
     protected abstract void Apply(List<Movable> targets);
     protected abstract void Disapply(List<Movable> targets);
 
-    protected IEnumerator Cancel(List<Movable> targets) {
+    protected IEnumerator Cancel(List<Movable> targets)
+    {
         yield return new WaitForSeconds(ActionTime);
         Disapply(targets);
     }

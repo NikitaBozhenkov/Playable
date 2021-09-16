@@ -24,30 +24,31 @@ public class GameplayScenarioManager : MonoBehaviour
     }
 
     [SerializeField] private Animation _counterAnimation;
-    [Space]
 
-    [Header("Scenario")]
-    [SerializeField] private string _playersSpritesPath;
+    [Space] [Header("Scenario")] [SerializeField]
+    private string _playersSpritesPath;
+
     [SerializeField] private PlayerScenario[] _playerScenarios;
     [SerializeField] private Transform _finishPoint;
     [SerializeField] private BoosterScenario[] _boostersScenarios;
-    [Space]
 
-    [Header("Hand imitation")]
-    [SerializeField] private Hand _handPrefab;
+    [Space] [Header("Hand imitation")] [SerializeField]
+    private Hand _handPrefab;
+
     [SerializeField] private float _dragSpeed;
-    [Space]
 
-    [Header("Finish")]
-    [SerializeField] private AudioClip _allFinishedSound;
+    [Space] [Header("Finish")] [SerializeField]
+    private AudioClip _allFinishedSound;
+
     [SerializeField] private float _delayAfterAllFinished;
-    [SerializeField] private Canvas _finishWindow; 
+    [SerializeField] private Canvas _finishWindow;
 
     private Loader<Sprite> _spriteLoader;
     private Hand _hand;
     private readonly List<Movable> _finishedMovables = new List<Movable>();
 
     #region Initialization
+
     private void Awake()
     {
         _spriteLoader = new LoaderResources<Sprite>();
@@ -73,16 +74,18 @@ public class GameplayScenarioManager : MonoBehaviour
         }
     }
 
-#endregion
+    #endregion
 
     #region Finish
 
-    private void OnMovableFinish(Movable movable) {
+    private void OnMovableFinish(Movable movable)
+    {
         _finishedMovables.Add(movable);
         movable.Finished -= OnMovableFinish;
         AudioController.Instance.PlaySound("finish_2");
 
-        if(_finishedMovables.Count == _playerScenarios.Length) {
+        if (_finishedMovables.Count == _playerScenarios.Length)
+        {
             StartCoroutine(OnAllFinished());
         }
     }
@@ -94,7 +97,8 @@ public class GameplayScenarioManager : MonoBehaviour
         yield return new WaitForSeconds(_allFinishedSound.length - 1f);
         _finishWindow.gameObject.SetActive(true);
         var finishWindow = _finishWindow.GetComponentInChildren<FinishWindowScenarioManager>();
-        var sprites = _finishedMovables.Select(finishedMovable => finishedMovable.GetComponent<Image>().sprite).ToArray();
+        var sprites = _finishedMovables.Select(finishedMovable => finishedMovable.GetComponent<Image>().sprite)
+            .ToArray();
         finishWindow.FillPlayersImages(sprites);
         StartCoroutine(finishWindow.StartScenario());
     }
@@ -131,14 +135,14 @@ public class GameplayScenarioManager : MonoBehaviour
 
         switch (booster.Type)
         {
-            case Booster.UsageType.Tap:
+            case BoosterUsageType.Tap:
             {
                 _hand.gameObject.SetActive(true);
                 StartCoroutine(_hand.ImitateTap(booster.transform.position));
                 booster.Use(targets);
                 break;
             }
-            case Booster.UsageType.Drag:
+            case BoosterUsageType.Drag:
             {
                 if (targets.Count != 1)
                 {
@@ -153,7 +157,7 @@ public class GameplayScenarioManager : MonoBehaviour
                     _hand.ImitateDrag(
                         booster.transform.position,
                         target.transform,
-                        booster.DragImage,
+                        booster.DragImage.sprite,
                         _dragSpeed));
                 break;
             }

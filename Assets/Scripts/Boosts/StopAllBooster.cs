@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 
 public class StopAllBooster : Booster
@@ -13,7 +12,8 @@ public class StopAllBooster : Booster
 
     protected override void Disapply(List<Movable> targets)
     {
-        foreach(var target in targets) {
+        foreach (var target in targets)
+        {
             target.StartMoving();
         }
     }

@@ -1,22 +1,19 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Movable : MonoBehaviour
 {
     [SerializeField] private float _baseSpeed;
+    [SerializeField] private Transform _aimPoint;
 
     public float BaseSpeed
     {
-        get => _baseSpeed; 
+        get => _baseSpeed;
         protected set => _baseSpeed = value;
     }
+
     public float ExtraSpeed;
     public float CurrentSpeed => _baseSpeed + ExtraSpeed;
-
-    [SerializeField] private Transform _aimPoint;
-
     public float FinishY => _aimPoint.position.y;
 
     public event Action<Movable> Finished;
@@ -35,7 +32,7 @@ public abstract class Movable : MonoBehaviour
     protected void OnFinish()
     {
         Finished?.Invoke(this);
-    } 
+    }
 
     public abstract void StartMoving();
     public abstract void StopMoving();

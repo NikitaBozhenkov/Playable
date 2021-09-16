@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -18,7 +17,20 @@ public class AudioController : MonoBehaviour
 
     private void Start()
     {
-        Instance = this;
+        MakeSingleton();
+    }
+
+    private void MakeSingleton()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void PlaySound(string clipName)
@@ -34,7 +46,8 @@ public class AudioController : MonoBehaviour
         _audioSource.PlayOneShot(clipToPlay, .1f);
     }
 
-    public void PlayClip(AudioClip clip) {
+    public void PlayClip(AudioClip clip)
+    {
         _audioSource.Stop();
 
         _audioSource.PlayOneShot(clip, .1f);

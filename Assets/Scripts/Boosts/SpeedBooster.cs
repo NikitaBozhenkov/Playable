@@ -1,10 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SpeedBooster : Booster
 {
-    [SerializeField, Range(-1,1)] private float _percentExtraSpeed;
+    [SerializeField, Range(-1, 1)] private float _percentExtraSpeed;
 
     protected override void Apply(List<Movable> targets)
     {

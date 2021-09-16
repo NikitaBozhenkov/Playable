@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveTowardsMovable : NonPhysicsMovable
+public class MoveTowardsMovable : FrameMovable
 {
     public override void FrameMove()
     {

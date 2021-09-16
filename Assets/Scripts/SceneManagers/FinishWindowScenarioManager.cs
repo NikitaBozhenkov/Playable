@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,9 +9,7 @@ public class FinishWindowScenarioManager : MonoBehaviour
     [SerializeField] private Image[] _players = new Image[4];
     [SerializeField] private ParticleSystem _smoke;
     [SerializeField] private Transform[] _loserPositions;
-
-    [SerializeField] private string _url;
-    [SerializeField] private Button _button;
+    [SerializeField] private RedirectionButton _button;
 
     [SerializeField] private Animator _textAnimator;
     [SerializeField] private AnimationClip endCard;
@@ -21,22 +18,13 @@ public class FinishWindowScenarioManager : MonoBehaviour
     [SerializeField] private AudioClip _winSound;
     private Animation _animation;
     [SerializeField] private string _textAnimationName;
+    private readonly RedirectionButton _redirectionButton;
 
     #region Initialization
 
     private void Awake()
     {
         _animation = GetComponent<Animation>();
-    }
-
-    private void Start()
-    {
-        _button.onClick.AddListener(GoToStore);
-    }
-
-    private void GoToStore()
-    {
-        Application.OpenURL(_url);
     }
 
     public void FillPlayersImages(Sprite[] sprites)

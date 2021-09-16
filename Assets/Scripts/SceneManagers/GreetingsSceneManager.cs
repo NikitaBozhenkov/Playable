@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,11 +20,13 @@ public class GreetingsSceneManager : MonoBehaviour
         var playersSprites = _spriteLoader.LoadAll(_playersSpritesPath);
         (playersSprites[1], playersSprites[0]) = (playersSprites[0], playersSprites[1]);
 
-        if(_players.Length > playersSprites.Length) {
+        if (_players.Length > playersSprites.Length)
+        {
             throw new Exception("Players count is greater than number of sprites");
         }
 
-        for(var i = 0; i < _players.Length; ++i) {
+        for (var i = 0; i < _players.Length; ++i)
+        {
             _players[i].gameObject.AddComponent<Image>().sprite = playersSprites[i];
         }
     }
